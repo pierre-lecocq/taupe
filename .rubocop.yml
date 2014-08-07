@@ -1,0 +1,6 @@
+Style/MethodLength:
+  CountComments: false
+  Max: 25
+
+Style/Encoding:
+  Enabled: false
