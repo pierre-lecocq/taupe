@@ -57,6 +57,7 @@ Here are the main reasons:
 
 #### Postgresql (highly recommended)
 
+    # Setup a postgresql database backend
     Taupe::Database.setup do
       type :postgresql
       host :localhost
@@ -67,6 +68,7 @@ Here are the main reasons:
 
 #### MySQL (not recommended)
 
+    # Setup a mysql database backend
     Taupe::Database.setup do
       type :mysql
       host :localhost
@@ -77,6 +79,7 @@ Here are the main reasons:
 
 #### SQLite
 
+    # Setup a sqlite database backend
     Taupe::Database.setup do
       type :sqlite
       database File.expand_path('/tmp/mydatabase.db')
@@ -86,6 +89,7 @@ Here are the main reasons:
 
 #### Memcached
 
+    # Setup a memcached cache backend
     Taupe::Cache.setup do
       type :memcached
       host :localhost
@@ -94,6 +98,7 @@ Here are the main reasons:
 
 #### Redis
 
+    # Setup a redis cache backend
     Taupe::Cache.setup do
       type :redis
       host :localhost
@@ -102,6 +107,7 @@ Here are the main reasons:
 
 ### Define some models
 
+    # Setup a model
     Taupe::Model.setup do
       table :article
       column :article_id, { type: Integer, :primary_key => true }
@@ -119,16 +125,22 @@ Here are the main reasons:
 
 #### Load an existing model object
 
-    article_id = 3 # A database ID
-    cache_key = "article_#{article_id}" # an optional cache key. Set it to nil if cache is not needed
+    # A database ID
+    article_id = 3
 
+    # An optional cache key. Set it to nil if cache is not setted or needed
+    cache_key = "article_#{article_id}"
+
+    # Load model from database and create corresponding object
     article = Taupe::Model::Article.load article_id, cache_key
 
 #### Save a modified model object
 
-     article.title = 'This is my modified article title'
+    # Modify the ruby object properties
+    article.title = 'This is my modified article title'
 
-     article.save # Insert or update the databse according to the way the article object was loaded (new one or existing one)
+    # Reflect changes in database/cache (insert or update)
+    article.save
 
 #### Query, query, query. But by yourself.
 
@@ -138,13 +150,18 @@ Here are the main reasons:
     # Fetch results in an array
     articles = Taupe::Database.fetch "SELECT * FROM article"
 
-    # Fetch on result
+    # Fetch a single result
     article = Taupe::Database.fetch "SELECT * FROM article WHERE article_id = 3", true
 
 For more clarity, you can also exec or fetch from any model class. It is exactly the same.
 
+    # Execute an insert query
     Taupe::Model::Article.exec "INSERT INTO article (title, state) VALUES ('Another article', 1)"
+
+    # Fetch
     articles = Taupe::Model::Article.fetch "SELECT * FROM article"
+
+    # Fetch single
     article = Taupe::Model::Article.fetch "SELECT * FROM article WHERE article_id = 3", true
 
 ## License
