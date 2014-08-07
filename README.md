@@ -55,7 +55,7 @@ Here are the main reasons:
 
 ### Define a SQL backend
 
-#### Postgresql (a.k.a "highly recommended")
+#### Postgresql (highly recommended)
 
     Taupe::Database.setup do
       type :postgresql
@@ -65,7 +65,7 @@ Here are the main reasons:
       database :mydatabase
     end
 
-#### MySQL (a.k.a "absolutely not recommended, unless you did not discover life, yet")
+#### MySQL (not recommended)
 
     Taupe::Database.setup do
       type :mysql
@@ -75,14 +75,14 @@ Here are the main reasons:
       database :mydatabase
     end
 
-#### SQLite (a.k.a "what the ...?? Well, in this specific case, Mmmmm'Okay.")
+#### SQLite
 
     Taupe::Database.setup do
       type :sqlite
       database File.expand_path('/tmp/mydatabase.db')
     end
 
-### Optionally define a cache backend (recommended, without any kind of humour)
+### Optionally define a cache backend (recommended)
 
 #### Memcached
 
@@ -147,6 +147,6 @@ For more clarity, you can also exec or fetch from any model class. It is exactly
     articles = Taupe::Model::Article.fetch "SELECT * FROM article"
     article = Taupe::Model::Article.fetch "SELECT * FROM article WHERE article_id = 3", true
 
-## What is that lame name? "Taupe"?
+## License
 
-Because "Taupe::Model" ... a (really) bad french pun. Nevermind. Won't explain. Really.
+Please see the [LICENSE](https://github.com/pierre-lecocq/taupe/blob/master/LICENSE) file
