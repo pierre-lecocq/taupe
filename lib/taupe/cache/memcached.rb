@@ -1,5 +1,5 @@
 # File: memcached.rb
-# Time-stamp: <2014-08-22 14:30:20 pierre>
+# Time-stamp: <2014-08-22 17:17:21 pierre>
 # Copyright (C) 2014 Pierre Lecocq
 # Description: Taupe library memcached driver class
 
@@ -13,7 +13,6 @@ module Taupe
       # Constructor
       # @param [Hash] The data source name
       def initialize(dsn)
-        require 'memcached'
         @connection = Memcached.new dsn
       end
 

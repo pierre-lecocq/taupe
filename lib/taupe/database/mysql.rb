@@ -1,5 +1,5 @@
 # File: mysql.rb
-# Time-stamp: <2014-08-22 15:50:39 pierre>
+# Time-stamp: <2014-08-22 17:17:02 pierre>
 # Copyright (C) 2014 Pierre Lecocq
 # Description: Taupe library mysql driver class
 
@@ -13,7 +13,6 @@ module Taupe
       # Constructor
       # @param [Hash] The data source name
       def initialize(dsn)
-        require 'mysql2'
         dsn[:host] = '127.0.0.1' if dsn[:host].to_s == 'localhost'
         @connection = Mysql2::Client.new dsn
         @connection.query_options.merge! symbolize_keys: true

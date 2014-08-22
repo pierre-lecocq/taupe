@@ -1,5 +1,5 @@
 # File: sqlite.rb
-# Time-stamp: <2014-08-22 15:50:14 pierre>
+# Time-stamp: <2014-08-22 17:17:13 pierre>
 # Copyright (C) 2014 Pierre Lecocq
 # Description: Taupe library sqlite driver class
 
@@ -13,7 +13,6 @@ module Taupe
       # Constructor
       # @param [Hash] The data source name
       def initialize(dsn)
-        require 'sqlite3'
         db = File.expand_path(dsn)
         fail "Database #{db} not found" unless File.exist? db
         @connection = SQLite3::Database.new db

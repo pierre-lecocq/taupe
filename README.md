@@ -14,8 +14,6 @@ Work in progress !
 - Finish rspec tests
 - Gemify and post to rubygems.org
 
-Will be done and finished in the coming month.
-
 ## What is it?
 
 **Taupe** is a simple and elegant database model manager.
