@@ -53,6 +53,29 @@ Here are the main reasons:
 
 ## How to use it?
 
+### Prerequisites
+
+In order to install the Taupe library, simply install the corresponding gem with
+
+    sudo gem install taupe
+
+After that, you must have a few gems install on your system, depending on which backends you want to use
+
+    # If you use PostgreSQL database
+    sudo gem install pg
+
+    # If you use MySQL database
+    sudo gem install mysql2
+
+    # If you use Sqlite database
+    sudo gem install sqlite3
+
+    # If you use Memcached
+    sudo gem install memcached
+
+    # If you use Redis
+    sudo gem install redis
+
 ### Define a SQL backend
 
 #### Postgresql (highly recommended)

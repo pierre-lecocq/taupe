@@ -4,12 +4,3 @@ source 'https://rubygems.org'
 gem 'rake'
 gem 'rspec'
 gem 'yard'
-
-# Database
-gem 'pg'
-gem 'mysql2'
-gem 'sqlite3'
-
-# Cache
-gem 'memcached'
-gem 'redis'

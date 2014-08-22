@@ -1,3 +1,8 @@
+# File: taupe.gemspec
+# Time-stamp: <2014-08-22 16:48:10 pierre>
+# Copyright (C) 2014 Pierre Lecocq
+# Description: Taupe library gemspec file
+
 require File.expand_path('../lib/taupe', __FILE__)
 
 Gem::Specification.new do |gem|

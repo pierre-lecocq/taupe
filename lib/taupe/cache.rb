@@ -1,5 +1,6 @@
+# -*- coding: utf-8 -*-
 # File: cache.rb
-# Time-stamp: <2014-08-22 15:43:23 pierre>
+# Time-stamp: <2014-08-22 16:59:32 pierre>
 # Copyright (C) 2014 Pierre Lecocq
 # Description: Taupe library cache class
 
@@ -38,9 +39,11 @@ module Taupe
     def self.setup_defaults
       case @instance._type
       when :memcached
+        Taupe.require_gem 'memcached', 'Memcached cache engine'
         @instance._host ||= :localhost
         @instance._port ||= 11_211
       when :redis
+        Taupe.require_gem 'redis', 'Redis cache engine'
         @instance._host ||= :localhost
         @instance._port ||= 6379
       else

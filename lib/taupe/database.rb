@@ -1,5 +1,5 @@
 # File: database.rb
-# Time-stamp: <2014-08-22 15:30:00 pierre>
+# Time-stamp: <2014-08-22 17:01:21 pierre>
 # Copyright (C) 2014 Pierre Lecocq
 # Description: Taupe library database class
 
@@ -51,14 +51,17 @@ module Taupe
     def self.setup_defaults
       case @instance._type
       when :pg, :pgsql, :postgres, :postgresql
+        Taupe.require_gem 'pg', 'PostgreSQL database engine'
         @instance._type = :postgresql
         @instance._host ||= :localhost
         @instance._port ||= 5432
       when :mysql, :mysql2
+        Taupe.require_gem 'mysql2', 'MySQL database engine'
         @instance._type = :mysql
         @instance._host ||= :localhost
         @instance._port ||= 3306
       when :sqlite, :sqlite3
+        Taupe.require_gem 'sqlite3', 'SQLite database engine'
         @instance._type = :sqlite
         @instance._database ||= File.expand_path('~/.taupe.db')
       else
