@@ -1,10 +1,10 @@
 # File: model.rb
-# Time-stamp: <2014-08-22 15:43:52 pierre>
+# Time-stamp: <2014-08-22 16:33:12 pierre>
 # Copyright (C) 2014 Pierre Lecocq
 # Description: Taupe library model class
 
 require 'taupe/model/table'
-require 'taupe/model/validator'
+require 'taupe/model/validate'
 
 module Taupe
   # Model class
