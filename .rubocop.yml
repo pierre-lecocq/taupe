@@ -1,3 +1,7 @@
+Style/ClassLength:
+  CountComments: false
+  Max: 150
+
 Style/MethodLength:
   CountComments: false
   Max: 25

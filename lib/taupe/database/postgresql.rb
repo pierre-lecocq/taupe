@@ -1,5 +1,5 @@
 # File: postgresql.rb
-# Time-stamp: <2014-08-01 12:00:00 pierre>
+# Time-stamp: <2014-08-22 15:50:21 pierre>
 # Copyright (C) 2014 Pierre Lecocq
 # Description: Taupe library postgresql driver class
 
@@ -22,9 +22,8 @@ module Taupe
       # @return [Object]
       def exec(query)
         result = @connection.exec query
-        if query.upcase.include? 'RETURNING'
-          @last_id = result[0].flatten[0]
-        end
+
+        @last_id = result[0].flatten[0] if query.upcase.include? 'RETURNING'
 
         result
       end
@@ -41,7 +40,6 @@ module Taupe
       def last_id
         @last_id.to_i
       end
-
     end
   end
 end

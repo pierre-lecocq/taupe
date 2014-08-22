@@ -1,5 +1,5 @@
 # File: cache.rb
-# Time-stamp: <2014-08-22 15:17:44 pierre>
+# Time-stamp: <2014-08-22 15:43:23 pierre>
 # Copyright (C) 2014 Pierre Lecocq
 # Description: Taupe library cache class
 

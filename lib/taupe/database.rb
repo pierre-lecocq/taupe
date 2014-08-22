@@ -1,5 +1,5 @@
 # File: database.rb
-# Time-stamp: <2014-08-01 12:00:00 pierre>
+# Time-stamp: <2014-08-22 15:30:00 pierre>
 # Copyright (C) 2014 Pierre Lecocq
 # Description: Taupe library database class
 
@@ -114,7 +114,7 @@ module Taupe
 
     # Fetch last inserted id
     # @return [Integer]
-    def self.last_id()
+    def self.last_id
       @instance.driver.last_id
     end
   end

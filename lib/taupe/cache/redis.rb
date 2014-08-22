@@ -1,5 +1,5 @@
 # File: redis.rb
-# Time-stamp: <2014-08-22 15:21:58 pierre>
+# Time-stamp: <2014-08-22 15:49:53 pierre>
 # Copyright (C) 2014 Pierre Lecocq
 # Description: Taupe library redis driver class
 

@@ -1,5 +1,5 @@
 # File: mysql.rb
-# Time-stamp: <2014-08-01 12:00:00 pierre>
+# Time-stamp: <2014-08-22 15:50:39 pierre>
 # Copyright (C) 2014 Pierre Lecocq
 # Description: Taupe library mysql driver class
 

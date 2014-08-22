@@ -1,5 +1,5 @@
 # File: sqlite.rb
-# Time-stamp: <2014-08-01 12:00:00 pierre>
+# Time-stamp: <2014-08-22 15:50:14 pierre>
 # Copyright (C) 2014 Pierre Lecocq
 # Description: Taupe library sqlite driver class
 
