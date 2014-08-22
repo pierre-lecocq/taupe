@@ -1,5 +1,5 @@
 # File: database.rb
-# Time-stamp: <2014-08-22 17:01:21 pierre>
+# Time-stamp: <2014-08-22 17:28:51 pierre>
 # Copyright (C) 2014 Pierre Lecocq
 # Description: Taupe library database class
 
@@ -97,6 +97,13 @@ module Taupe
       cname = "Taupe::Database::#{@instance._type.capitalize}Driver"
       klass = cname.split('::').reduce(Object) { |a, e| a.const_get e }
       @instance.driver = klass.new dsn
+    end
+
+    # Guess schema of a table
+    # @param table [String] The table name
+    # @return [Hash]
+    def self.guess_schema(table)
+      @instance.driver.guess_schema table
     end
 
     # Execute a single query

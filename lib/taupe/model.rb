@@ -1,5 +1,5 @@
 # File: model.rb
-# Time-stamp: <2014-08-22 16:33:12 pierre>
+# Time-stamp: <2014-08-22 17:22:45 pierre>
 # Copyright (C) 2014 Pierre Lecocq
 # Description: Taupe library model class
 

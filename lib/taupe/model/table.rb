@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 # File: table.rb
-# Time-stamp: <2014-08-22 16:00:21 pierre>
+# Time-stamp: <2014-08-22 17:34:35 pierre>
 # Copyright (C) 2014 Pierre Lecocq
 # Description: Taupe library model table class
 
@@ -40,11 +40,13 @@ module Taupe
       # @param id [Numeric]
       # @param cache_id [String]
       # @param values [Hash]
-      def initialize(table, columns, id = nil, cache_key = nil, values = {})
+      def initialize(table, columns = nil, pkey_id = nil, cache_key = nil, values = {})
+        columns = Taupe::Database.guess_schema(table) if columns.nil?
+
         @_table = table
         @_columns = columns
         @_pkey = nil
-        @_pkey_id = id
+        @_pkey_id = pkey_id
         @_cache_key = cache_key
         @_values = values
 

@@ -1,5 +1,5 @@
 # File: validate.rb
-# Time-stamp: <2014-08-22 16:33:01 pierre>
+# Time-stamp: <2014-08-22 21:23:34 pierre>
 # Copyright (C) 2014 Pierre Lecocq
 # Description: Taupe library validate class
 
@@ -27,6 +27,19 @@ module Taupe
       fail errors.join(' - ') unless errors.empty?
 
       values
+    end
+
+    # Transform a SQL type into a standard type
+    def sql_type_to_standard_type(sql_type)
+      standard_type = nil
+      case sql_type.to_s.downcase
+      when 'integer'
+        standard_type = Integer
+      else
+        standard_type = String
+      end
+
+      standard_type
     end
   end
 end
