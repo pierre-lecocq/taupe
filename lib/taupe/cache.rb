@@ -1,5 +1,5 @@
 # File: cache.rb
-# Time-stamp: <2014-08-01 12:00:00 pierre>
+# Time-stamp: <2014-08-22 15:17:44 pierre>
 # Copyright (C) 2014 Pierre Lecocq
 # Description: Taupe library cache class
 
@@ -73,20 +73,20 @@ module Taupe
     # @param key [String] The key to retrieve
     # @return [Object]
     def self.get(key)
-      @instance.driver.get key
+      @instance.driver.get key.to_s
     end
 
     # Set a cache entry
     # @param key [String] The key to set
     # @param value [Object] The value
     def self.set(key, value)
-      @instance.driver.set key, value
+      @instance.driver.set key.to_s, value
     end
 
     # Delete a key
     # @param key [String] The key to delete
     def delete(key)
-      @instance.driver.delete key
+      @instance.driver.delete key.to_s
     end
   end
 end

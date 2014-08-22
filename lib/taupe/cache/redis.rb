@@ -1,5 +1,5 @@
 # File: redis.rb
-# Time-stamp: <2014-08-01 12:00:00 pierre>
+# Time-stamp: <2014-08-22 15:21:58 pierre>
 # Copyright (C) 2014 Pierre Lecocq
 # Description: Taupe library redis driver class
 
@@ -20,14 +20,15 @@ module Taupe
       # Get a cache entry
       # @param key [String] The key to retrieve
       # @return [Object]
-      def self.get(key)
-        @connection.hgetall(key).symolize_keys
+      def get(key)
+        @connection.hgetall(key).symbolize_keys
       end
 
       # Set a cache entry
       # @param key [String] The key to set
       # @param value [Object] The value
-      def self.set(key, value)
+      def set(key, value)
+        fail 'Only HASH values are supported' unless value.is_a?(Hash)
         @connection.mapped_hmset key, value
       end
 
