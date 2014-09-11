@@ -1,5 +1,5 @@
 # File: postgresql.rb
-# Time-stamp: <2014-09-11 14:58:39 pierre>
+# Time-stamp: <2014-09-11 15:06:27 pierre>
 # Copyright (C) 2014 Pierre Lecocq
 # Description: Taupe library postgresql driver class
 
@@ -22,7 +22,7 @@ module Taupe
       def exec(query)
         result = @connection.exec query
 
-        @last_id = result[0].flatten[0] if query.upcase.include? 'RETURNING'
+        @last_id = query.upcase.include?('RETURNING') ? result[0].flatten[0] : nil
 
         result
       end
@@ -37,6 +37,10 @@ module Taupe
       # Get last inserted id
       # @return [Integer]
       def last_id
+        if @last_id.nil?
+          warn 'Last ID can not be retrieved. Maybe the last query did not include the "RETURNING" statement'
+        end
+
         @last_id.to_i
       end
 
