@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 # File: table.rb
-# Time-stamp: <2014-09-11 16:24:31 pierre>
+# Time-stamp: <2014-09-11 16:28:23 pierre>
 # Copyright (C) 2014 Pierre Lecocq
 # Description: Taupe library model table class
 
@@ -17,7 +17,7 @@ module Taupe
 
       # Load a new object
       # @param pkey_id [Numeric]
-      # @param cache_id [String]
+      # @param cache_key [String]
       def self.load(pkey_id = nil, cache_key = nil)
         full_cname = "Taupe::Model::#{@_cname}"
         klass = full_cname.split('::').reduce(Object) { |a, e| a.const_get e }
@@ -34,7 +34,7 @@ module Taupe
       # Load a new object from existing values
       # @param values [Hash]
       # @param pkey_id [Numeric]
-      # @param cache_id [String]
+      # @param cache_key [String]
       def self.load_from_hash(values, pkey_id = nil, cache_key = nil)
         full_cname = "Taupe::Model::#{@_cname}"
         klass = full_cname.split('::').reduce(Object) { |a, e| a.const_get e }

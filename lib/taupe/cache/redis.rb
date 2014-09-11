@@ -1,5 +1,5 @@
 # File: redis.rb
-# Time-stamp: <2014-08-22 17:17:28 pierre>
+# Time-stamp: <2014-09-11 16:28:45 pierre>
 # Copyright (C) 2014 Pierre Lecocq
 # Description: Taupe library redis driver class
 
@@ -11,7 +11,7 @@ module Taupe
       attr_accessor :connection
 
       # Constructor
-      # @param [Hash] The data source name
+      # @param dsn [Hash] The data source name
       def initialize(dsn)
         @connection = Redis.new dsn
       end

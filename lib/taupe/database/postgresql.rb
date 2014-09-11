@@ -1,5 +1,5 @@
 # File: postgresql.rb
-# Time-stamp: <2014-09-11 16:11:17 pierre>
+# Time-stamp: <2014-09-11 16:29:13 pierre>
 # Copyright (C) 2014 Pierre Lecocq
 # Description: Taupe library postgresql driver class
 
@@ -11,7 +11,7 @@ module Taupe
       attr_accessor :connection, :last_id
 
       # Constructor
-      # @param [Hash] The data source name
+      # @param dsn [Hash] The data source name
       def initialize(dsn)
         @connection = PG::Connection.new dsn
       end

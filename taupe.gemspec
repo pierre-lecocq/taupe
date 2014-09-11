@@ -1,5 +1,5 @@
 # File: taupe.gemspec
-# Time-stamp: <2014-08-22 16:48:10 pierre>
+# Time-stamp: <2014-09-11 16:31:28 pierre>
 # Copyright (C) 2014 Pierre Lecocq
 # Description: Taupe library gemspec file
 
@@ -17,6 +17,6 @@ Gem::Specification.new do |gem|
   gem.email             = ['pierre.lecocq@gmail.com']
   gem.summary           = 'A model manager with database and cache backends in ruby'
   gem.description       = 'Keep your database '
-  gem.homepage          = ''
+  gem.homepage          = 'https://github.com/pierre-lecocq/taupe'
   gem.date              = '2014-08-01'
 end

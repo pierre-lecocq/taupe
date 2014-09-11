@@ -1,5 +1,5 @@
 # File: taupe.rb
-# Time-stamp: <2014-09-11 16:06:18 pierre>
+# Time-stamp: <2014-09-11 16:27:47 pierre>
 # Copyright (C) 2014 Pierre Lecocq
 # Description: Taupe library main file
 
@@ -16,7 +16,7 @@ module Taupe
   VERSION = [0, 5, 3].join('.')
 
   # Require a gem
-  # @param gem [String] the gem name
+  # @param gem_name [String] the gem name
   # @param description [String] a description of the gem
   def self.require_gem(gem_name, description)
     require gem_name

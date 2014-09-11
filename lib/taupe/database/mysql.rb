@@ -1,5 +1,5 @@
 # File: mysql.rb
-# Time-stamp: <2014-09-11 14:57:57 pierre>
+# Time-stamp: <2014-09-11 16:29:52 pierre>
 # Copyright (C) 2014 Pierre Lecocq
 # Description: Taupe library mysql driver class
 
@@ -11,7 +11,7 @@ module Taupe
       attr_accessor :connection
 
       # Constructor
-      # @param [Hash] The data source name
+      # @param dsn [Hash] The data source name
       def initialize(dsn)
         dsn[:host] = '127.0.0.1' if dsn[:host].to_s == 'localhost'
         @connection = Mysql2::Client.new dsn
@@ -27,7 +27,6 @@ module Taupe
 
       # Fetch objects from database
       # @param query [String] The query to fetch
-      # @param single [Boolean] Must return one or more results?
       # @return [Array, Object]
       def fetch(query)
         exec(query).to_a
