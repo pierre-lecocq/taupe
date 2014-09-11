@@ -6,7 +6,6 @@ Work in progress !
 
 ### TODO
 
-- Finish live tests with sample app
 - Finish rspec tests
 - Gemify and post to rubygems.org
 

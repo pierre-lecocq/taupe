@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 # File: table.rb
-# Time-stamp: <2014-09-11 13:44:50 pierre>
+# Time-stamp: <2014-09-11 15:15:45 pierre>
 # Copyright (C) 2014 Pierre Lecocq
 # Description: Taupe library model table class
 
@@ -96,7 +96,7 @@ module Taupe
       # Save the model object
       # @param with_validations [Boolean]
       def save(with_validations = true)
-        Taupe::Validator.check(@_values, @_columns) if with_validations
+        Taupe::Validate.check(@_values, @_columns) if with_validations
 
         if @_pkey_id.nil?
           query = "

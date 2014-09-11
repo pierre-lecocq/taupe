@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 # File: bookmarker.rb
-# Time-stamp: <2014-08-01 12:00:00 pierre>
+# Time-stamp: <2014-09-11 15:49:26 pierre>
 # Copyright (C) 2014 Pierre Lecocq
 # Description: Taupe library sample app
 
@@ -25,25 +25,16 @@ Sample commands:
 
 =end
 
-require 'ap'
 require 'optparse'
-require_relative '../../lib/taupe.rb'
+require_relative '../../lib/taupe'
 
 # Define a database backend
 
-# path = File.expand_path('~/.taupe-bookmarkrt.db')
-# File.new(path, 'w') unless File.exist? path
-# Taupe::Database.setup do
-#   type :sqlite
-#   database File.expand_path('~/.taupe-bookmarkrt.db')
-# end
-
+path = File.expand_path('~/.taupe-bookmarker.db')
+File.new(path, 'w') unless File.exist? path
 Taupe::Database.setup do
-  type :postgresql
-  host :localhost
-  username :developer
-  password :d3v
-  database :mydb
+  type :sqlite
+  database File.expand_path('~/.taupe-bookmarker.db')
 end
 
 # Define a cache backend
@@ -66,46 +57,6 @@ Taupe::Model.setup do
   column :name,        { type: String, :null => false }
   column :url,         { type: String, :null => false }
 end
-
-# Parse options
-
-options = {}
-OptionParser.new do |opts|
-  opts.banner = "Usage: bookmarker.rb [options]"
-
-  opts.on("--init", "Initialize the database") do |o|
-    options[:action] = :init
-  end
-
-  opts.on("-a", "--add", "Add a bookmark") do |o|
-    options[:action] = :add
-  end
-
-  opts.on("-d", "--delete", "Delete a bookmark") do |o|
-    options[:action] = :delete
-  end
-
-  opts.on("-l", "--list", "List bookmarks") do |o|
-    options[:action] = :list
-  end
-
-  opts.on("-u URL", "--url URL", "Bookmark url") do |o|
-    options[:url] = o
-  end
-
-  opts.on("-n NAME", "--name NAME", "Bookmark name") do |o|
-    options[:name] = o
-  end
-
-  opts.on("-i ID", "--id ID", Integer, "Bookmark id") do |o|
-    options[:id] = o
-  end
-
-  opts.on("-t x,y,z", "--tags x,y,z", Array, "Tags") do |o|
-    options[:tags] = o
-  end
-
-end.parse!
 
 # The bookmarker class
 class Bookmaker
@@ -187,15 +138,12 @@ class Bookmaker
   # List bookmarks
   def _list
     # Build query
-    query = 'SELECT bookmark.* FROM bookmark'
+    query = 'SELECT DISTINCT(bookmark.bookmark_id), bookmark.* FROM bookmark'
 
     if !@options[:tags].nil? && !@options[:tags].empty?
       query << ' LEFT JOIN bookmark_tag ON bookmark.bookmark_id = bookmark_tag.bookmark_id'
       query << ' LEFT JOIN tag ON tag.tag_id = bookmark_tag.tag_id'
-      query << ' WHERE 1=1 '
-      @options[:tags].each do |tag_name|
-        query << " AND tag.name = '#{tag_name}'"
-      end
+      query << " WHERE tag.name IN (#{@options[:tags].map { |t| '\'' + t + '\''}.join(',')})"
     end
 
     # Fetch results
@@ -252,6 +200,46 @@ class Bookmaker
   # Set some methods private
   private :_dispatch, :_add, :_delete, :_list, :_init
 end
+
+# Parse options
+
+options = {}
+OptionParser.new do |opts|
+  opts.banner = "Usage: bookmarker.rb [options]"
+
+  opts.on("--init", "Initialize the database") do |o|
+    options[:action] = :init
+  end
+
+  opts.on("-a", "--add", "Add a bookmark") do |o|
+    options[:action] = :add
+  end
+
+  opts.on("-d", "--delete", "Delete a bookmark") do |o|
+    options[:action] = :delete
+  end
+
+  opts.on("-l", "--list", "List bookmarks") do |o|
+    options[:action] = :list
+  end
+
+  opts.on("-u URL", "--url URL", "Bookmark url") do |o|
+    options[:url] = o
+  end
+
+  opts.on("-n NAME", "--name NAME", "Bookmark name") do |o|
+    options[:name] = o
+  end
+
+  opts.on("-i ID", "--id ID", Integer, "Bookmark id") do |o|
+    options[:id] = o
+  end
+
+  opts.on("-t x,y,z", "--tags x,y,z", Array, "Tags") do |o|
+    options[:tags] = o
+  end
+
+end.parse!
 
 # Run the application
 Bookmaker.new options
