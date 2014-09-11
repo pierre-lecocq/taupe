@@ -1,5 +1,8 @@
 # Taupe
 
+[![Gem Version](https://badge.fury.io/rb/taupe.svg)](http://badge.fury.io/rb/taupe)
+[![Build Status](https://travis-ci.org/pierre-lecocq/taupe.svg?branch=master)](https://travis-ci.org/pierre-lecocq/taupe)
+
 ## What is it?
 
 **Taupe** is a simple and elegant database model manager.
@@ -37,7 +40,7 @@ Here are the main reasons:
 
 ## How to use it?
 
-### Prerequisites
+### Install
 
 In order to install the Taupe library, simply install the corresponding gem with
 
