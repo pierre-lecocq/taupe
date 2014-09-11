@@ -4,3 +4,7 @@ source 'https://rubygems.org'
 gem 'rake'
 gem 'rspec'
 gem 'yard'
+
+group :test do
+  gem 'sqlite3'
+end
