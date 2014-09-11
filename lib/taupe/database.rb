@@ -1,5 +1,5 @@
 # File: database.rb
-# Time-stamp: <2014-08-22 17:28:51 pierre>
+# Time-stamp: <2014-09-11 14:52:41 pierre>
 # Copyright (C) 2014 Pierre Lecocq
 # Description: Taupe library database class
 
@@ -126,6 +126,13 @@ module Taupe
     # @return [Integer]
     def self.last_id
       @instance.driver.last_id
+    end
+
+    # Escape a string
+    # @param str [String]
+    # @return [String]
+    def self.escape(str)
+      @instance.driver.escape str
     end
   end
 end

@@ -7,7 +7,6 @@ Work in progress !
 ### TODO
 
 - Fix the "last_id" method in PG driver
-- Implement escaping methods in SQL drivers
 - Finish live tests with sample app
 - Finish rspec tests
 - Gemify and post to rubygems.org

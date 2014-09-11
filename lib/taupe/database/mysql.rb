@@ -1,5 +1,5 @@
 # File: mysql.rb
-# Time-stamp: <2014-09-11 14:38:38 pierre>
+# Time-stamp: <2014-09-11 14:57:57 pierre>
 # Copyright (C) 2014 Pierre Lecocq
 # Description: Taupe library mysql driver class
 
@@ -58,6 +58,13 @@ module Taupe
         end
 
         results
+      end
+
+      # Escape a string
+      # @param str [String]
+      # @return [String]
+      def escape(str)
+        @connection.escape str
       end
     end
   end

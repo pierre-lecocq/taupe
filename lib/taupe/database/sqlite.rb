@@ -1,5 +1,5 @@
 # File: sqlite.rb
-# Time-stamp: <2014-09-11 14:49:53 pierre>
+# Time-stamp: <2014-09-11 15:01:58 pierre>
 # Copyright (C) 2014 Pierre Lecocq
 # Description: Taupe library sqlite driver class
 
@@ -58,6 +58,15 @@ module Taupe
         end
 
         results
+      end
+
+      # Escape a string
+      # @param str [String]
+      # @return [String]
+      def escape(str)
+        # Sqlite3 does not implement this kind of thing
+        # Use prepare statements instead
+        str
       end
     end
   end

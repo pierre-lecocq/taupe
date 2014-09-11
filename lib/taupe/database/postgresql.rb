@@ -1,5 +1,5 @@
 # File: postgresql.rb
-# Time-stamp: <2014-09-11 14:38:28 pierre>
+# Time-stamp: <2014-09-11 14:58:39 pierre>
 # Copyright (C) 2014 Pierre Lecocq
 # Description: Taupe library postgresql driver class
 
@@ -66,6 +66,13 @@ module Taupe
         end
 
         results
+      end
+
+      # Escape a string
+      # @param str [String]
+      # @return [String]
+      def escape(str)
+        @connection.escape_string str
       end
     end
   end
