@@ -1,5 +1,5 @@
 # File: postgresql.rb
-# Time-stamp: <2014-09-11 15:06:27 pierre>
+# Time-stamp: <2014-09-11 16:11:17 pierre>
 # Copyright (C) 2014 Pierre Lecocq
 # Description: Taupe library postgresql driver class
 
@@ -22,7 +22,8 @@ module Taupe
       def exec(query)
         result = @connection.exec query
 
-        @last_id = query.upcase.include?('RETURNING') ? result[0].flatten[0] : nil
+        @last_id = nil
+        @last_id = result[0].flatten[0] if query.upcase.include?('RETURNING')
 
         result
       end
@@ -38,7 +39,10 @@ module Taupe
       # @return [Integer]
       def last_id
         if @last_id.nil?
-          warn 'Last ID can not be retrieved. Maybe the last query did not include the "RETURNING" statement'
+          message = 'Last ID can not be retrieved.'
+          message << ' Maybe the last query did not include "RETURNING"'
+
+          warn message
         end
 
         @last_id.to_i
@@ -50,7 +54,9 @@ module Taupe
       def guess_schema(table)
         results = {}
 
-        query = 'SELECT column_name, data_type, character_maximum_length, column_default, is_nullable'
+        query = 'SELECT'
+        query << ' column_name, data_type, character_maximum_length,'
+        query << ' column_default, is_nullable'
         query << ' FROM INFORMATION_SCHEMA.COLUMNS'
         query << format(' WHERE table_name = \'%s\'', table)
         query << ' ORDER BY ordinal_position'
@@ -58,8 +64,8 @@ module Taupe
         fetch(query).each do |values|
           type = Taupe::Validate.standardize_sql_type values[:data_type]
           pkey = false
-          if !values[:column_default].nil? && !values[:column_default].match('nextval').nil?
-            pkey = true
+          unless values[:column_default].nil?
+            pkey = true unless values[:column_default].match('nextval').nil?
           end
 
           results[values[:column_name].to_sym] = {

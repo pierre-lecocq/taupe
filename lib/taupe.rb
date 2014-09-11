@@ -1,5 +1,5 @@
 # File: taupe.rb
-# Time-stamp: <2014-09-11 14:14:03 pierre>
+# Time-stamp: <2014-09-11 16:06:18 pierre>
 # Copyright (C) 2014 Pierre Lecocq
 # Description: Taupe library main file
 
@@ -21,6 +21,6 @@ module Taupe
   def self.require_gem(gem_name, description)
     require gem_name
   rescue LoadError
-    raise format('In order to use %s, install the gem "%s"', description, gem_name)
+    raise format('To use %s, install the "%s" gem', description, gem_name)
   end
 end

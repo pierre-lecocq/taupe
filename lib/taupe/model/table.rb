@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 # File: table.rb
-# Time-stamp: <2014-09-11 15:15:45 pierre>
+# Time-stamp: <2014-09-11 16:24:31 pierre>
 # Copyright (C) 2014 Pierre Lecocq
 # Description: Taupe library model table class
 
@@ -21,7 +21,14 @@ module Taupe
       def self.load(pkey_id = nil, cache_key = nil)
         full_cname = "Taupe::Model::#{@_cname}"
         klass = full_cname.split('::').reduce(Object) { |a, e| a.const_get e }
-        klass.new @_table, @_columns, pkey_id, cache_key
+
+        options = {
+          pkey_id: pkey_id,
+          cache_key: cache_key,
+          values: nil
+        }
+
+        klass.new @_table, @_columns, options
       end
 
       # Load a new object from existing values
@@ -31,36 +38,38 @@ module Taupe
       def self.load_from_hash(values, pkey_id = nil, cache_key = nil)
         full_cname = "Taupe::Model::#{@_cname}"
         klass = full_cname.split('::').reduce(Object) { |a, e| a.const_get e }
-        klass.new @_table, @_columns, pkey_id, cache_key, values
+
+        options = {
+          pkey_id: pkey_id,
+          cache_key: cache_key,
+          values: values
+        }
+
+        klass.new @_table, @_columns, options
       end
 
       # Constructor
       # @param table [String]
       # @param columns [Hash]
-      # @param id [Numeric]
-      # @param cache_id [String]
-      # @param values [Hash]
-      def initialize(table, columns = nil, pkey_id = nil, cache_key = nil, values = {})
+      # @param options [Hash]
+      def initialize(table, columns = nil, options = {})
         columns = Taupe::Database.guess_schema(table) if columns.nil?
 
         @_table = table
         @_columns = columns
         @_pkey = nil
-        @_pkey_id = pkey_id
-        @_cache_key = cache_key
-        @_values = values
+        @_pkey_id = options[:pkey_id] || nil
+        @_cache_key = options[:cache_key] || nil
+        @_values = options[:values] || {}
 
         @_pkey = columns.select { |_k, v| v[:primary_key] == true }.first[0]
         fail "Primary key undefined for model #{table}" if @_pkey.nil?
 
-        if values.empty?
-          return if pkey_id.nil?
+        if @_values.empty?
+          return if @_pkey_id.nil?
           retrieve_from_database unless retrieve_from_cache
         else
-          if @_pkey_id.nil?
-            @_pkey_id = values[@_pkey]
-            @_values[@_pkey] = @_pkey_id
-          end
+          @_pkey_id = @_values[@_pkey] if @_pkey_id.nil?
         end
       end
 

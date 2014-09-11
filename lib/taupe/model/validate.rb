@@ -1,5 +1,5 @@
 # File: validate.rb
-# Time-stamp: <2014-09-11 14:46:45 pierre>
+# Time-stamp: <2014-09-11 16:13:29 pierre>
 # Copyright (C) 2014 Pierre Lecocq
 # Description: Taupe library validate class
 
@@ -33,11 +33,12 @@ module Taupe
     def self.standardize_sql_type(sql_type)
       standard_type = nil
       case sql_type.to_s.downcase
-      when 'integer'
+      when 'integer', 'int', 'int(11)', 'bigint', 'smallint', 'tinyint'
         standard_type = Integer
       when 'float'
         standard_type = Float
-      when 'date', 'time', 'datetime, ''timestamp', 'timestamp wit time zone', 'timestamp without time zone'
+      when 'date', 'time', 'datetime', 'timestamp',
+        'timestamp wit time zone', 'timestamp without time zone'
         standard_type = Time
       else
         standard_type = String

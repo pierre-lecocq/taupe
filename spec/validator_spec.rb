@@ -1,9 +1,9 @@
 # File: validator_spec.rb
-# Time-stamp: <2014-08-01 12:00:00 pierre>
+# Time-stamp: <2014-09-11 15:56:04 pierre>
 # Copyright (C) 2014 Pierre Lecocq
 # Description: Taupe library validator tests file
 
-describe Taupe::Validator do
+describe Taupe::Validate do
   describe '#check' do
     it 'should succeed' do
       values = {
@@ -19,7 +19,7 @@ describe Taupe::Validator do
         :content => { :type => String }
       }
 
-      expect(Taupe::Validator.check(values, definitions)).to eql values
+      expect(Taupe::Validate.check(values, definitions)).to eql values
     end
 
     it 'should send a failure' do
@@ -37,7 +37,7 @@ describe Taupe::Validator do
         :content => { :type => String }
       }
 
-      expect{ Taupe::Validator.check(values, definitions) }.to raise_error
+      expect{ Taupe::Validate.check(values, definitions) }.to raise_error
     end
   end
 end

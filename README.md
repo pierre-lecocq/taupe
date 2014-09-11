@@ -1,14 +1,5 @@
 # Taupe
 
-## Disclamer
-
-Work in progress !
-
-### TODO
-
-- Finish rspec tests
-- Gemify and post to rubygems.org
-
 ## What is it?
 
 **Taupe** is a simple and elegant database model manager.

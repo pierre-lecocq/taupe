@@ -1,8 +1,8 @@
-Style/ClassLength:
+Metrics/ClassLength:
   CountComments: false
   Max: 150
 
-Style/MethodLength:
+Metrics/MethodLength:
   CountComments: false
   Max: 25
 

@@ -1,5 +1,5 @@
 # File: model_spec.rb
-# Time-stamp: <2014-08-01 12:00:00 pierre>
+# Time-stamp: <2014-09-11 16:03:43 pierre>
 # Copyright (C) 2014 Pierre Lecocq
 # Description: Taupe library model tests file
 
@@ -37,7 +37,7 @@ describe Taupe::Model do
   end
 
   # Query method
-  describe '#query' do
+  describe '#query and #save' do
     it 'should execute an insert into Article' do
       model_object = Taupe::Model::Article.load
       model_object.title = 'This is a new article'
@@ -50,7 +50,7 @@ describe Taupe::Model do
 
       expect(results).to be_a Array
       expect(results.length).to eql 3
-      expect(results.last[:title]).to eql 'This is a new article'
+      expect(results.last.title).to eql 'This is a new article'
     end
   end
 end
