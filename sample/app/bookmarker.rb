@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 # File: bookmarker.rb
-# Time-stamp: <2014-09-11 15:49:26 pierre>
+# Time-stamp: <2014-09-11 15:54:05 pierre>
 # Copyright (C) 2014 Pierre Lecocq
 # Description: Taupe library sample app
 
@@ -30,11 +30,11 @@ require_relative '../../lib/taupe'
 
 # Define a database backend
 
-path = File.expand_path('~/.taupe-bookmarker.db')
+path = File.expand_path('./bookmarker.db')
 File.new(path, 'w') unless File.exist? path
 Taupe::Database.setup do
   type :sqlite
-  database File.expand_path('~/.taupe-bookmarker.db')
+  database File.expand_path('./bookmarker.db')
 end
 
 # Define a cache backend
