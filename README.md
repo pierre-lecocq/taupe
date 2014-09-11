@@ -8,8 +8,6 @@ Work in progress !
 
 - Fix the "last_id" method in PG driver
 - Implement escaping methods in SQL drivers
-- Implement auto-schema discovery methods
-- Improve validators
 - Finish live tests with sample app
 - Finish rspec tests
 - Gemify and post to rubygems.org

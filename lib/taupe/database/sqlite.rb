@@ -1,5 +1,5 @@
 # File: sqlite.rb
-# Time-stamp: <2014-08-22 17:17:13 pierre>
+# Time-stamp: <2014-09-11 14:49:53 pierre>
 # Copyright (C) 2014 Pierre Lecocq
 # Description: Taupe library sqlite driver class
 
@@ -30,13 +30,34 @@ module Taupe
       # @param query [String] The query to fetch
       # @return [Array, Object]
       def fetch(query)
-        exec(query).map { |row| row.symbolize_keys }
+        exec(query).map(&:symbolize_keys)
       end
 
       # Get last inserted id
       # @return [Integer]
       def last_id
         @connection.last_insert_row_id.to_i
+      end
+
+      # Guess schema of a table
+      # @param table [String] The table name
+      # @return [Hash]
+      def guess_schema(table)
+        results = {}
+
+        query = format('pragma table_info(%s)', table)
+
+        fetch(query).each do |values|
+          type = Taupe::Validate.standardize_sql_type values[:type]
+
+          results[values[:name].to_sym] = {
+            type: type,
+            null: values[:notnull] == 0,
+            primary_key: values[:pk] == 1
+          }
+        end
+
+        results
       end
     end
   end

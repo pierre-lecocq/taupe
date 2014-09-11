@@ -1,5 +1,5 @@
 # File: mysql.rb
-# Time-stamp: <2014-08-22 17:17:02 pierre>
+# Time-stamp: <2014-09-11 14:38:38 pierre>
 # Copyright (C) 2014 Pierre Lecocq
 # Description: Taupe library mysql driver class
 
@@ -37,6 +37,27 @@ module Taupe
       # @return [Integer]
       def last_id
         @connection.last_id.to_i
+      end
+
+      # Guess schema of a table
+      # @param table [String] The table name
+      # @return [Hash]
+      def guess_schema(table)
+        results = {}
+
+        query = format('SHOW COLUMNS FROM %s', table)
+
+        fetch(query).each do |values|
+          type = Taupe::Validate.standardize_sql_type values[:Type]
+
+          results[values[:Field].to_sym] = {
+            type: type,
+            null: values[:Null] != 'NO',
+            primary_key: values[:Key] == 'PRI'
+          }
+        end
+
+        results
       end
     end
   end

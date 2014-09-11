@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 # File: table.rb
-# Time-stamp: <2014-08-22 17:34:35 pierre>
+# Time-stamp: <2014-09-11 13:44:50 pierre>
 # Copyright (C) 2014 Pierre Lecocq
 # Description: Taupe library model table class
 

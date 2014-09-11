@@ -1,5 +1,5 @@
 # File: postgresql.rb
-# Time-stamp: <2014-08-22 21:23:40 pierre>
+# Time-stamp: <2014-09-11 14:38:28 pierre>
 # Copyright (C) 2014 Pierre Lecocq
 # Description: Taupe library postgresql driver class
 
@@ -31,7 +31,7 @@ module Taupe
       # @param query [String] The query to fetch
       # @return [Array, Object]
       def fetch(query)
-        exec(query).to_a.map { |row| row.symbolize_keys }
+        exec(query).to_a.map(&:symbolize_keys)
       end
 
       # Get last inserted id
@@ -40,16 +40,32 @@ module Taupe
         @last_id.to_i
       end
 
-
       # Guess schema of a table
       # @param table [String] The table name
       # @return [Hash]
       def guess_schema(table)
-        query = 'SELECT column_name, data_type, character_maximum_length'
-        query << ' FROM INFORMATION_SCHEMA.COLUMNS'
-        query << ' WHERE table_name = \'%s\'' % table
+        results = {}
 
-        results = fetch query
+        query = 'SELECT column_name, data_type, character_maximum_length, column_default, is_nullable'
+        query << ' FROM INFORMATION_SCHEMA.COLUMNS'
+        query << format(' WHERE table_name = \'%s\'', table)
+        query << ' ORDER BY ordinal_position'
+
+        fetch(query).each do |values|
+          type = Taupe::Validate.standardize_sql_type values[:data_type]
+          pkey = false
+          if !values[:column_default].nil? && !values[:column_default].match('nextval').nil?
+            pkey = true
+          end
+
+          results[values[:column_name].to_sym] = {
+            type: type,
+            null: values[:is_nullable] != 'NO',
+            primary_key: pkey
+          }
+        end
+
+        results
       end
     end
   end
