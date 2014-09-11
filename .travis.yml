@@ -7,7 +7,7 @@ rvm:
 script: 'rake test'
 
 before_install:
-  - gem install rspec sqlite3
+  - gem install rspec rubocop yard sqlite3
 
 notifications:
   email: pierre.lecocq@gmail.com
