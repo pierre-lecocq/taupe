@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 # File: table.rb
-# Time-stamp: <2014-12-10 14:46:01 pierre>
+# Time-stamp: <2014-12-10 15:43:32 pierre>
 # Copyright (C) 2014 Pierre Lecocq
 # Description: Taupe library model table class
 
@@ -175,7 +175,7 @@ module Taupe
       # @param key [Symbol]
       # @return [Boolean]
       def property?(key)
-        @_columns.include? key.to_sym
+        @_values.include? key.to_sym
       end
 
       # Add a propery to the current model

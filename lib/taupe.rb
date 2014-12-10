@@ -1,5 +1,5 @@
 # File: taupe.rb
-# Time-stamp: <2014-12-10 14:53:34 pierre>
+# Time-stamp: <2014-12-10 15:42:29 pierre>
 # Copyright (C) 2014 Pierre Lecocq
 # Description: Taupe library main file
 
@@ -13,7 +13,7 @@ require 'taupe/model'
 # Main Taupe module
 module Taupe
   # Current version constant in the form major.minor.patch
-  VERSION = [0, 6, 1].join('.')
+  VERSION = [0, 6, 2].join('.')
 
   # Require a gem
   # @param gem_name [String] the gem name
