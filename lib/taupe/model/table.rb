@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 # File: table.rb
-# Time-stamp: <2014-12-10 15:43:32 pierre>
+# Time-stamp: <2014-12-10 15:58:00 pierre>
 # Copyright (C) 2014 Pierre Lecocq
 # Description: Taupe library model table class
 
@@ -162,7 +162,7 @@ module Taupe
         ms = m.to_s
         if ms.include? '='
           ms = ms[0..-2]
-          if property? ms.to_sym
+          if @_columns.include? ms.to_sym
             @_values[ms.to_sym] = args[0]
             return true
           end
