@@ -1,5 +1,5 @@
 # File: model_spec.rb
-# Time-stamp: <2014-09-11 16:03:43 pierre>
+# Time-stamp: <2014-12-10 16:27:47 pierre>
 # Copyright (C) 2014 Pierre Lecocq
 # Description: Taupe library model tests file
 
@@ -51,6 +51,17 @@ describe Taupe::Model do
       expect(results).to be_a Array
       expect(results.length).to eql 3
       expect(results.last.title).to eql 'This is a new article'
+    end
+  end
+
+  # Types
+  describe 'types' do
+    it 'should return an object and transform it to an Hash' do
+      query = "SELECT * FROM article WHERE article_id = 1"
+      result = Taupe::Model::Article.fetch(query, true)
+      expect(result).to be_a Taupe::Model::Article
+      hash_result = result.to_hash
+      expect(hash_result).to be_a Hash
     end
   end
 end

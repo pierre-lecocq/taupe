@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 # File: table.rb
-# Time-stamp: <2014-12-10 15:58:00 pierre>
+# Time-stamp: <2014-12-10 16:24:03 pierre>
 # Copyright (C) 2014 Pierre Lecocq
 # Description: Taupe library model table class
 
@@ -193,6 +193,12 @@ module Taupe
         end
 
         @_values[key]
+      end
+
+      # Transform to hash
+      # @return [Hash]
+      def to_hash
+        @_values
       end
 
       # Execute a single query
