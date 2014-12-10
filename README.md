@@ -103,7 +103,7 @@ After that, you must have a few gems install on your system, depending on which 
     Taupe::Cache.setup do
       type :memcached
       host :localhost
-      port :11211
+      port 11211 # A symbol can not start with an integer, so make it an integer
     end
 
 #### Redis
@@ -112,7 +112,7 @@ After that, you must have a few gems install on your system, depending on which 
     Taupe::Cache.setup do
       type :redis
       host :localhost
-      port :6379
+      port 6379 # A symbol can not start with an integer, so make it an integer
     end
 
 ### Define some models
@@ -152,27 +152,98 @@ After that, you must have a few gems install on your system, depending on which 
     # Reflect changes in database/cache (insert or update)
     article.save
 
-#### Query, query, query. But by yourself.
+#### Execute raw queries
 
-    # Execute a single query
+In order to execute raw queries like INERT, UPDATE or DELETE, the easiest method is to execute them directly on the database object. There is no specific need to execute them from a specific model's class.
+
+    # Execute raw queries
     Taupe::Database.exec "INSERT INTO article (title, state) VALUES ('Another article', 1)"
+    Taupe::Database.exec "UPDATE article SET title = 'Yet another article' WHERE article_id = 1"
+    Taupe::Database.exec "DELETE article WHERE article_id = 1"
+
+#### Fetching objects
+
+There are two ways of fetching objects that depend on the expecting results
+
+##### Fetch objects and get an Array of Hashes
+
+By executing a SELECT query on the database object, Taupe returns an Array of the Hash values of the object.
+
+For example:
 
     # Fetch results in an array
     articles = Taupe::Database.fetch "SELECT * FROM article"
 
-    # Fetch a single result
-    article = Taupe::Database.fetch "SELECT * FROM article WHERE article_id = 3", true
+gives:
 
-For more clarity, you can also exec or fetch from any model class. It is exactly the same.
+    [
+        { :article_id => 1, :title => 'An article'},
+        { :article_id => 2, :title => 'Another article'}
+    ]
 
-    # Execute an insert query
-    Taupe::Model::Article.exec "INSERT INTO article (title, state) VALUES ('Another article', 1)"
+This is great if you need either raw or flexible data to deal with afterwards.
+Of course, you deal with this data like any ruby array of hashes.
+
+##### Fetch objects and get an Array of Model Objects
+
+By executing a SELECT query on a specific model object, Taupe returns an Array of Objects.
+
+For example:
 
     # Fetch
     articles = Taupe::Model::Article.fetch "SELECT * FROM article"
 
-    # Fetch single
-    article = Taupe::Model::Article.fetch "SELECT * FROM article WHERE article_id = 3", true
+gives (these are dummy data):
+
+    [
+        <Taupe::Model::Article:0x000000014e3c88 @_table=:article, @_columns={:article_id=>{:type=>Integer, :primary_key=>true}, # skip...
+        <Taupe::Model::Article:0x000000014e38b8 @_table=:article, @_columns={:article_id=>{:type=>Integer, :primary_key=>true} # skip...
+    ]
+
+Therefore, it allows you to deal with all the objects contained in the result array like (for example):
+
+    articles.each do |article|
+        # Display some properties
+        puts article.article_id
+        puts "The title of this article is: #{article.title}"
+
+        # Modify some properties
+        article.title = '[Updated] ' + article.title
+
+        # And save the model
+        article.save
+    end
+
+And this methods allows you to play with extended models like described just below.
+
+#### Extend models
+
+Models can be extended to add some properties that are not stored (and will not be stored) in the database.
+
+Let's take an example to illustrate this, instead of talking:
+
+    module Taupe
+      class Model
+        class Article
+
+          def full_title
+            add_property :full_title, "Article #{article_id} - #{title}"
+          end
+
+          def tag_ids
+            add_property :tag_ids, [1, 2, 5]
+          end
+        end
+      end
+    end
+
+This adds two new dummy properties that can be uesd as any other property:
+
+    articles = Taupe::Model::Article.fetch "SELECT * FROM article"
+
+    articles.each do |r|
+      puts r.full_title
+    end
 
 ## License
 

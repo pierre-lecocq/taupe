@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 # File: table.rb
-# Time-stamp: <2014-09-11 16:28:23 pierre>
+# Time-stamp: <2014-12-10 14:46:01 pierre>
 # Copyright (C) 2014 Pierre Lecocq
 # Description: Taupe library model table class
 
@@ -62,6 +62,11 @@ module Taupe
         @_cache_key = options[:cache_key] || nil
         @_values = options[:values] || {}
 
+        # Clean up values (i.e SQLite duplicates values with numeric keys)
+        @_values.each do |k, _v|
+          @_values.delete(k) unless k.is_a? Symbol
+        end
+
         @_pkey = columns.select { |_k, v| v[:primary_key] == true }.first[0]
         fail "Primary key undefined for model #{table}" if @_pkey.nil?
 
@@ -95,8 +100,8 @@ module Taupe
 
         return nil if result.nil? || result.empty?
 
-        result.map do |k, v|
-          @_values[k.to_sym] = v unless k.is_a? Numeric
+        result.each do |k, v|
+          @_values[k.to_sym] = v if k.is_a? Symbol
         end
 
         Taupe::Cache.set @_cache_key, @_values unless @_cache_key.nil?
@@ -107,18 +112,20 @@ module Taupe
       def save(with_validations = true)
         Taupe::Validate.check(@_values, @_columns) if with_validations
 
+        real_values = @_values.keep_if { |k, _v| @_columns.key?(k) }
+
         if @_pkey_id.nil?
           query = "
             INSERT INTO #{@_table}
-               (#{@_values.keys.map(&:to_s).join(', ')})
+               (#{real_values.keys.map(&:to_s).join(', ')})
             VALUES
-               (#{@_values.values.map { |e| "'" + e.to_s + "'" }.join(', ')})
+               (#{real_values.values.map { |e| "'" + e.to_s + "'" }.join(', ')})
           "
 
           Taupe::Database.exec query
           @_pkey_id = Taupe::Database.last_id
         else
-          joined_values = @_values.map { |k, v| "#{k} = '#{v}'" }.join(', ')
+          joined_values = real_values.map { |k, v| "#{k} = '#{v}'" }.join(', ')
           query = "
             UPDATE #{@_table} SET #{joined_values}
             WHERE #{@_pkey} = #{@_pkey_id}
@@ -155,13 +162,37 @@ module Taupe
         ms = m.to_s
         if ms.include? '='
           ms = ms[0..-2]
-          if @_columns.include? ms.to_sym
+          if property? ms.to_sym
             @_values[ms.to_sym] = args[0]
             return true
           end
         end
 
         super
+      end
+
+      # Check if current model has a given property
+      # @param key [Symbol]
+      # @return [Boolean]
+      def property?(key)
+        @_columns.include? key.to_sym
+      end
+
+      # Add a propery to the current model
+      # @param key [Symbol]
+      # @param value [Mixed]
+      # @param column_properties [Hash]
+      # @return [Mixed]
+      def add_property(key, value = nil, column_properties = {})
+        key = key.to_sym
+        unless property? key
+          @_values[key] = value
+
+          # Include in database columns definition
+          @_columns[key] = {} unless column_properties.empty?
+        end
+
+        @_values[key]
       end
 
       # Execute a single query
